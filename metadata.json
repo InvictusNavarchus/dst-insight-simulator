@@ -1,0 +1,6 @@
+{
+  "name": "DST Character Insight Simulator",
+  "description": "An interactive character build and skill tree simulator for Don't Starve Together, featuring persistent build slots, point budget validation, and copyable share codes.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
