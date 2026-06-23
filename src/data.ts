@@ -680,8 +680,8 @@ export const DST_CHARACTERS: Character[] = [
     id: "wortox",
     name: "Wortox",
     title: "The Soul Starved",
-    quote: "Hyah, hyah! More souls to skip!",
-    description: "Wortox is a playful imp. His skill tree balances between playing 'Nice' (healing teammates, teleporting allies inside your hops) and playing 'Naughty' (exploding souls to deal damage, chewing souls for sustenance).",
+    quote: "Pardon me if I don't shake your hand.",
+    description: "Wortox's Skill Tree uses a unique Scales system that will significantly impact his playstyle. Choosing a skill on one side of the scale tips it towards that inclination. Once enough points are put into a side, Wortox will get his inclination changed.",
     avatar: "😈",
     color: {
       primary: "purple-600",
@@ -691,69 +691,83 @@ export const DST_CHARACTERS: Character[] = [
       accent: "text-purple-400"
     },
     categories: [
-      { name: "Nice", description: "Maximize healing capacity, take teammates along on hops, and improve hop fuel efficiency." },
-      { name: "Naughty", description: "Extract souls from battle, use souls as explosive combat payloads, and digest souls as edible foods." },
-      { name: "Neutral", description: "Harness the sleep frequency of Pan Flutes, expanding sleep zones or gaining shield defenses." },
-      { name: "Affinity", description: "Affiliate to harvest planar shadow crops or sprout lunar-infused planar soul spikes." }
+      { name: "Nice", description: "When Nice inclined, Wortox will no longer be seen as a monster by mobs. Releasing souls gives more sanity." },
+      { name: "Naughty", description: "When Naughty inclined, Wortox will be able to hold in a Soul Overload. Eating/releasing souls has no sanity effect." },
+      { name: "Neutral", description: "Neutral skills do not impact The Scales in any way, but will contribute towards unlocking skills." },
+      { name: "Affinity", description: "Choosing an Affinity will skew the Scales, making it easier to get Naughty or Nice Inclination." }
     ],
     skills: [
-      // Nice (Healing & Hops)
-      { id: "wortox_heal_1", name: "Nice Healing I", description: "Released souls heal allies for +15% more flat health.", category: "Nice", prerequisites: [] },
-      { id: "wortox_heal_2", name: "Nice Healing II", description: "Group healing automatically targets the lowest-health players.", category: "Nice", prerequisites: ["wortox_heal_1"] },
-      { id: "wortox_heal_3", name: "Nice Healing III", description: "Instantly revives ghosts in range by spending 5 souls.", category: "Nice", prerequisites: ["wortox_heal_2"] },
+      // Nice
+      { id: "wortox_lifebringer_1", name: "Lifebringer I", description: "Learn how to channel Souls into a Twintailed Heart, a creation used to revive ghostly friends.", category: "Nice", prerequisites: [] },
+      { id: "wortox_lifebringer_2", name: "Lifebringer II", description: "Your ghostly friends will no longer suffer health penalties when you revive them with a Twintailed Heart.", category: "Nice", prerequisites: ["wortox_lifebringer_1"] },
+      { id: "wortox_lifebringer_3", name: "Lifebringer III", description: "Allow the Twintailed Heart to be used by another which will pull them to you from near or afar.", category: "Nice", prerequisites: ["wortox_lifebringer_2"], requiredSkillsCount: { count: 5 } },
       
-      { id: "wortox_hop_party", name: "Party Hop", description: "Allows bringing nearby friendly players when you cast Soul Hop.", category: "Nice", prerequisites: [] },
-      { id: "wortox_hop_eff_1", name: "Hop Efficiency I", description: "Slightly reduces hunger cost when casting Soul Hops.", category: "Nice", prerequisites: ["wortox_hop_party"] },
-      { id: "wortox_hop_eff_2", name: "Hop Efficiency II", description: "Soul Hop coordinates cost 30% fewer souls on ultra-long ranges.", category: "Nice", prerequisites: ["wortox_hop_eff_1"] },
+      { id: "wortox_reaching_souls_1", name: "Reaching Souls I", description: "Dropped Souls will heal at an increased range.", category: "Nice", prerequisites: [] },
+      { id: "wortox_reaching_souls_2", name: "Reaching Souls II", description: "Dropped Souls will move towards hurt players, and heal at an increased range.", category: "Nice", prerequisites: ["wortox_reaching_souls_1"] },
 
-      // Naughty (Combat & Devour)
-      { id: "wortox_combat_drop", name: "Reaping Touch", description: "Dealing active damage has a 5% chance to force-drop a soul.", category: "Naughty", prerequisites: [] },
+      { id: "wortox_soul_bastion_1", name: "Soul Bastion I", description: "Dropped Souls will do a second healing wave for a lower amount after a delay.", category: "Nice", prerequisites: ["wortox_reaching_souls_2"], requiredSkillsCount: { count: 5 } },
+      { id: "wortox_soul_bastion_2", name: "Soul Bastion II", description: "Dropped Souls will move faster towards hurt players, the second healing wave will happen quicker, and Souls are more efficient at healing multiple players.", category: "Nice", prerequisites: ["wortox_soul_bastion_1"] },
       
-      { id: "wortox_burst_1", name: "Soul Burst I", description: "Releasing souls deals 10 physical damage to all nearby enemies.", category: "Naughty", prerequisites: ["wortox_combat_drop"] },
-      { id: "wortox_burst_2", name: "Soul Burst II", description: "Soul Burst deals 20 damage and applies a short physical slowdown.", category: "Naughty", prerequisites: ["wortox_burst_1"] },
-      { id: "wortox_burst_3", name: "Soul Burst III", description: "Soul Burst damage peaks at 40 and tracks surrounding targets.", category: "Naughty", prerequisites: ["wortox_burst_2"] },
+      { id: "wortox_lifted_spirits_1", name: "Lifted Spirits I", description: "Souls waiting to be freed in a Soul Echo will enhance your movement speed.", category: "Nice", prerequisites: [] },
+      { id: "wortox_lifted_spirits_2", name: "Lifted Spirits II", description: "Soul Echo duration is increased.", category: "Nice", prerequisites: ["wortox_lifted_spirits_1"] },
       
-      { id: "wortox_gobble_1", name: "Soul Gobbler I", description: "Eating souls yields +10 bonus hunger points.", category: "Naughty", prerequisites: [] },
-      { id: "wortox_gobble_2", name: "Soul Gobbler II", description: "Soul feeding has zero sanity penalty (normally costs -5 sanity).", category: "Naughty", prerequisites: ["wortox_gobble_1"] },
+      { id: "wortox_reverberation", name: "Reverberation", description: "Soul Echo will happen a second time. This does not decrease Soul Hop costs from the Map.", category: "Nice", prerequisites: ["wortox_lifted_spirits_2"] },
+      { id: "wortox_capricious_movement", name: "Capricious Movement", description: "Soul Hop cost from the Map will be reduced by how much of the current world's land has been explored.", category: "Nice", prerequisites: ["wortox_lifted_spirits_2"] },
 
-      // Neutral (Pan Flutes)
-      { id: "wortox_music_range", name: "Resonant Flute", description: "Pan Flute tunes reach 50% wider areas on the screen.", category: "Neutral", prerequisites: [] },
-      { id: "wortox_sleep_time", name: "Deep Slumber", description: "Increases monster sleep duration by an additional 10 seconds.", category: "Neutral", prerequisites: ["wortox_music_range"] },
-      { id: "wortox_sleep_shield", name: "Shielded Slumber", description: "Wortox earns a 150-value protective shield while playing the flute.", category: "Neutral", prerequisites: ["wortox_sleep_time"] },
+      // Neutral
+      { id: "wortox_impromptu_flautist", name: "Impromptu Flautist", description: "You periodically feel a musical pull to play your flute. Pan Flutes will not lose durability one time when feeling this urge to play.", category: "Neutral", prerequisites: [] },
+      { id: "wortox_pleasant_pastorale", name: "Pleasant Pastorale", description: "Playing your Pan Flute with such pleasing notes will bring lost Souls around for a listen.", category: "Neutral", prerequisites: ["wortox_impromptu_flautist"] },
+      { id: "wortox_cloudy_carmen", name: "Cloudy Carmen", description: "Things waking up after your Pan Flute playing will not be able to become hostile towards you for a moment.", category: "Neutral", prerequisites: ["wortox_impromptu_flautist"] },
+
+      // Naughty
+      { id: "wortox_knabsacker", name: "Knabsacker", description: "You've hung around Krampus enough to create a Knabsack for your own item stealing desires.", category: "Naughty", prerequisites: [] },
+      { id: "wortox_soul_jar", name: "Soul Jar", description: "Learn how to craft and use a Soul Jar to store Souls for later use. Soul Jars will leak Souls over time when not in your inventory.", category: "Naughty", prerequisites: ["wortox_knabsacker"] },
+      { id: "wortox_overflowing_greed", name: "Overflowing Greed", description: "Holding Soul Jars increases your maximum Souls allowed to be held at once by 5 each, stopping you from overloading of Soul power.", category: "Naughty", prerequisites: ["wortox_soul_jar"] },
+      { id: "wortox_covetous_collector", name: "Covetous Collector", description: "Held Souls and Souls inside of Soul Jars increases both the damage of the Knabsack and the damage of Souls, up to 100 total Souls collected.", category: "Naughty", prerequisites: ["wortox_soul_jar"] },
+
+      { id: "wortox_soul_thief_1", name: "Soul Thief I", description: "Souls are created and attracted to you from further away.", category: "Naughty", prerequisites: [] },
+      { id: "wortox_soul_thief_2", name: "Soul Thief II", description: "Souls will last longer while being attracted to you.", category: "Naughty", prerequisites: ["wortox_soul_thief_1"] },
+
+      { id: "wortox_soul_pierce_1", name: "Soul Pierce I", description: "Souls attracted to you will hurt other creatures with Souls along its path.", category: "Naughty", prerequisites: ["wortox_soul_thief_2"], requiredSkillsCount: { count: 5 } },
+      { id: "wortox_soul_pierce_2", name: "Soul Pierce II", description: "Souls attracted to you will repel away initially before coming towards you.", category: "Naughty", prerequisites: ["wortox_soul_pierce_1"] },
+
+      { id: "wortox_soul_decoy_1", name: "Soul Decoy I", description: "Soul Hopping creates a Soul Decoy to draw the attention of attacking creatures that possess Souls.", category: "Naughty", prerequisites: [] },
+      { id: "wortox_soul_decoy_2", name: "Soul Decoy II", description: "Soul Decoys will stay around for a bit longer if they are unharmed, and damage the thing that hit the Decoy.", category: "Naughty", prerequisites: ["wortox_soul_decoy_1"] },
+      { id: "wortox_soul_decoy_3", name: "Soul Decoy III", description: "Soul Decoys will now explode and inflict damage on things lured by it or attacking you upon expiration.", category: "Naughty", prerequisites: ["wortox_soul_decoy_2"], requiredSkillsCount: { count: 5 } },
 
       // Affinity
-      { id: "wortox_shadow_reap", name: "Shadow Harvester", description: "Increases planar damage against lunar targets (+15).", category: "Affinity", prerequisites: [], conflictNodes: ["wortox_lunar_sow"], additionalReqs: "Defeat Fuelweaver" },
-      { id: "wortox_shadow_core", name: "Shadow Reaper", description: "Gain souls from shadow mobs without any proximity cap.", category: "Affinity", prerequisites: ["wortox_shadow_reap"], conflictNodes: ["wortox_lunar_sow"] },
-      { id: "wortox_lunar_sow", name: "Lunar Sower", description: "Sprouts cold lunar spikes when teleporting, dealing planar hurt.", category: "Affinity", prerequisites: [], conflictNodes: ["wortox_shadow_reap"], additionalReqs: "Defeat Celestial Champion" },
-      { id: "wortox_lunar_shape", name: "Lunar Shaper", description: "Summon bright clones to distract aggression after Soul Hopping.", category: "Affinity", prerequisites: ["wortox_lunar_sow"], conflictNodes: ["wortox_shadow_reap"] }
+      { id: "wortox_shadow_harvester", name: "Shadow Harvester", description: "Souls waiting to be freed in a Soul Echo will cause damage dealt to spread out to close enemies or hit one target twice, and expire the timer.", category: "Affinity", prerequisites: [], conflictNodes: ["wortox_lunar_swindler"], additionalReqs: "Defeat Ancient Fuelweaver" },
+      { id: "wortox_lunar_swindler", name: "Lunar Swindler", description: "Souls waiting to be freed in a Soul Echo will absorb incoming damage, and expire the timer.", category: "Affinity", prerequisites: [], conflictNodes: ["wortox_shadow_harvester"], additionalReqs: "Defeat Celestial Champion" }
     ],
     layout: {
       columns: [
         {
-          title: "Nice Paths (Healing & Transit)",
+          title: "Nice Inclination",
           skills: [
-            ["wortox_heal_1", "wortox_heal_2", "wortox_heal_3"],
-            ["wortox_hop_party", "wortox_hop_eff_1", "wortox_hop_eff_2"]
+            ["wortox_lifebringer_1", "wortox_lifebringer_2", "wortox_lifebringer_3"],
+            ["wortox_reaching_souls_1", "wortox_reaching_souls_2", "wortox_soul_bastion_1", "wortox_soul_bastion_2"],
+            ["wortox_lifted_spirits_1", "wortox_lifted_spirits_2", "wortox_reverberation", "wortox_capricious_movement"]
           ]
         },
         {
-          title: "Naughty Paths (Devastation)",
+          title: "Neutral",
           skills: [
-            ["wortox_combat_drop", "wortox_burst_1", "wortox_burst_2", "wortox_burst_3"],
-            ["wortox_gobble_1", "wortox_gobble_2"]
+            ["wortox_impromptu_flautist", "wortox_pleasant_pastorale", "wortox_cloudy_carmen"]
           ]
         },
         {
-          title: "Pan Flute Neutral",
+          title: "Naughty Inclination",
           skills: [
-            ["wortox_music_range", "wortox_sleep_time", "wortox_sleep_shield"]
+            ["wortox_knabsacker", "wortox_soul_jar", "wortox_overflowing_greed", "wortox_covetous_collector"],
+            ["wortox_soul_thief_1", "wortox_soul_thief_2", "wortox_soul_pierce_1", "wortox_soul_pierce_2"],
+            ["wortox_soul_decoy_1", "wortox_soul_decoy_2", "wortox_soul_decoy_3"]
           ]
         },
         {
-          title: "Soul Alignments",
+          title: "Affinities",
           skills: [
-            ["wortox_shadow_reap", "wortox_shadow_core"],
-            ["wortox_lunar_sow", "wortox_lunar_shape"]
+            ["wortox_shadow_harvester"],
+            ["wortox_lunar_swindler"]
           ]
         }
       ]
